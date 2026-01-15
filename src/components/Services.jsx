@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 
 const Services = () => {
-  // Initial State with some default data
+  // Initial State
   const [cryptoData, setCryptoData] = useState([
     { symbol: 'BTC', price: 'Loading...', change: 0, image: '' },
     { symbol: 'ETH', price: 'Loading...', change: 0, image: '' },
@@ -23,7 +23,7 @@ const Services = () => {
     { symbol: 'USDT', price: 'Loading...', change: 0, image: '' },
   ]);
 
-  // --- FETCH LIVE DATA FROM COINGECKO API (FREE) ---
+  // --- FETCH LIVE DATA ---
   useEffect(() => {
     const fetchPrices = async () => {
       try {
@@ -32,14 +32,13 @@ const Services = () => {
         );
         const data = await response.json();
 
-        // Format the API data for our Ticker
         const formattedData = data.map(coin => ({
           id: coin.id,
           symbol: coin.symbol.toUpperCase(),
           price: `$${coin.current_price.toLocaleString()}`,
           change: coin.price_change_percentage_24h.toFixed(2),
           isPositive: coin.price_change_percentage_24h >= 0,
-          image: coin.image // Get the logo URL
+          image: coin.image
         }));
 
         setCryptoData(formattedData);
@@ -49,53 +48,60 @@ const Services = () => {
     };
 
     fetchPrices();
-    
-    // Optional: Refresh every 60 seconds
     const interval = setInterval(fetchPrices, 60000);
     return () => clearInterval(interval);
   }, []);
 
-  // Duplicate list for seamless infinite scroll
-  const tickerItems = [...cryptoData, ...cryptoData];
+  // Triple the list for smooth infinite scrolling
+  const tickerItems = [...cryptoData, ...cryptoData, ...cryptoData];
 
   return (
-    <section id="nodes" className="py-24 px-6 relative overflow-hidden">
+    <section id="nodes" className="py-24 px-6 relative overflow-hidden ">
 
-      {/* CSS Animation for Ticker */}
       <style>{`
         @keyframes scroll {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(-33.33%); }
         }
         .animate-scroll {
-          animation: scroll 40s linear infinite;
+          animation: scroll 60s linear infinite;
         }
-        /* REMOVED the hover-pause rule so it never stops */
       `}</style>
 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* --- LIVE MARKET TICKER (Real API Data) --- */}
-        <div className="mb-24 relative group">
+        {/* --- LIVE MARKET TICKER --- */}
+        <div className="mb-24 relative">
+          
           {/* Label */}
           <div className="absolute -top-3 left-6 z-20 px-3 py-1 bg-[#FE601F] text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-[0_0_15px_rgba(254,96,31,0.4)] flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
             Live Market
           </div>
 
-          {/* Glass Container */}
-          <div className="w-full overflow-hidden bg-white/5 border-y border-white/10 backdrop-blur-md py-4 relative">
+          {/* THE FIX: css mask-image 
+             This fades the Borders, Background, and Content all at once.
+          */}
+          <div 
+            className="w-full overflow-hidden bg-white/5 border-y border-white/10 backdrop-blur-md py-4 relative"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'
+            }}
+          >
             <div className="flex w-max animate-scroll">
               {tickerItems.map((coin, index) => (
                 <div key={`${coin.symbol}-${index}`} className="flex items-center gap-3 px-8 border-r border-white/5 min-w-[200px]">
                   
                   {/* Coin Logo */}
-                  {coin.image && (
+                  {coin.image ? (
                     <img 
                       src={coin.image} 
                       alt={coin.symbol} 
                       className="w-6 h-6 rounded-full object-cover"
                     />
+                  ) : (
+                    <div className="w-6 h-6 rounded-full bg-white/10 animate-pulse"></div>
                   )}
 
                   <span className="font-bold text-gray-400 text-sm">{coin.symbol}</span>
@@ -107,10 +113,6 @@ const Services = () => {
                 </div>
               ))}
             </div>
-            
-            {/* Fade Gradients on edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#050505] to-transparent z-10"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#050505] to-transparent z-10"></div>
           </div>
         </div>
 
