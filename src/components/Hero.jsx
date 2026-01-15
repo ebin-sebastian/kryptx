@@ -142,7 +142,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-gray-400 text-lg leading-relaxed max-w-lg mx-auto lg:mx-0 mb-10">
-            Step out of the digital shadows. We provide safe P2P transactions, expert consulting, and full tax compliance—right here in Chalakudy.
+            Step out of the digital shadows. We provide safe P2P transactions, expert consulting, and full tax compliance—right here in Chalakudyyy.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
