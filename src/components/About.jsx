@@ -10,7 +10,11 @@ import {
   MapPin, 
   Users, 
   Zap,
-  Activity
+  Activity,
+  CheckCircle2,
+  FileText,
+  Scale,
+  TrendingUp
 } from 'lucide-react';
 
 // --- DATA ---
@@ -68,7 +72,7 @@ const steps = [
 
 const About = () => {
   return (
-    <section id="about" className="py-32 px-6 relative overflow-hidden bg-[#050505]">
+    <section id="about" className="py-32 px-6 relative overflow-hidden ">
       
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -82,75 +86,110 @@ const About = () => {
         <div className="flex flex-col gap-32">
 
             {/* =========================================
-                PART 1: WHO WE ARE
+                PART 1: WHO WE ARE (SIMPLIFIED & CLEAR)
                ========================================= */}
             <div>
+                {/* Header Badge */}
                 <div className="text-center mb-16">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#FE601F] text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-md">
-                    <ShieldCheck size={14} />
-                    Who We Are
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#FE601F] text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-md shadow-[0_0_15px_rgba(254,96,31,0.2)]">
+                    <Building2 size={14} />
+                    Corporate Profile
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
-                    About <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FE601F] to-[#ff9d3a]">KryptX Solutions</span>
+                  <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">
+                    About <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FE601F] via-[#ff8c5a] to-[#ffa07a]">KryptX Solutions</span>
                   </h2>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {/* Company Info */}
-                  <div className="bg-[#0a0a0a] rounded-[32px] border border-white/5 p-10 hover:border-white/10 transition-colors flex flex-col justify-center relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="relative z-10">
-                      <h3 className="text-2xl font-bold text-white mb-6">Our Company</h3>
-                      <p className="text-gray-400 leading-relaxed mb-6 text-lg">
-                        KryptX Solutions Private Limited is a duly incorporated Indian Private Limited company providing structured and compliance-oriented cryptocurrency services.
-                      </p>
-                      <p className="text-gray-400 leading-relaxed text-lg">
-                        We operate with a strong emphasis on transparency, internal controls, and risk management, following documented processes and ethical business practices.
-                      </p>
-                    </div>
-                  </div>
+                {/* --- CORPORATE DASHBOARD CARD --- */}
+                <div className="relative rounded-[40px] border border-white/10 bg-[#0a0a0a] overflow-hidden group shadow-2xl">
+                  
+                  {/* Top Glowing Edge */}
+                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#FE601F]/50 to-transparent"></div>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-12 relative z-10">
+                    
+                    {/* LEFT COLUMN: THE STORY (7 Cols) */}
+                    <div className="lg:col-span-7 p-8 md:p-12 lg:border-r border-white/5 flex flex-col justify-center">
+                       
+                       {/* Identity Tag (SIMPLIFIED) */}
+                       <div className="flex flex-wrap gap-3 mb-8">
+                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
+                             <CheckCircle2 size={14} className="text-green-500" />
+                             <span className="text-xs font-bold text-green-500 tracking-wide uppercase">Govt. Registered Entity</span>
+                         </div>
+                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20">
+                             <FileText size={14} className="text-blue-500" />
+                             <span className="text-xs font-bold text-blue-500 tracking-wide uppercase">Licensed & Compliant</span>
+                         </div>
+                       </div>
 
-                  {/* Values */}
-                  <div className="bg-[#0a0a0a] rounded-[32px] border border-white/5 p-10 hover:border-white/10 transition-colors relative overflow-hidden group">
-                     <div className="absolute inset-0 bg-gradient-to-bl from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                     <div className="relative z-10">
-                        <h3 className="text-2xl font-bold text-white mb-8">Our Commitment</h3>
-                        <div className="space-y-8">
-                          <div className="flex items-start gap-5 group/item">
-                            <div className="w-12 h-12 bg-orange-500/10 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform duration-300 border border-orange-500/20">
-                              <ShieldCheck size={24} className="text-[#FE601F]" />
-                            </div>
-                            <div>
-                              <h4 className="text-white font-bold text-lg mb-1 group-hover/item:text-[#FE601F] transition-colors">Transparency First</h4>
-                              <p className="text-gray-400 text-sm leading-relaxed">Clear documentation and honest communication.</p>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-5 group/item">
-                            <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform duration-300 border border-purple-500/20">
-                              <Target size={24} className="text-purple-500" />
-                            </div>
-                            <div>
-                              <h4 className="text-white font-bold text-lg mb-1 group-hover/item:text-purple-400 transition-colors">Long-term Sustainability</h4>
-                              <p className="text-gray-400 text-sm leading-relaxed">Building investor confidence through prudent growth.</p>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-5 group/item">
-                            <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform duration-300 border border-emerald-500/20">
-                              <Award size={24} className="text-emerald-500" />
-                            </div>
-                            <div>
-                              <h4 className="text-white font-bold text-lg mb-1 group-hover/item:text-emerald-400 transition-colors">Innovation with Compliance</h4>
-                              <p className="text-gray-400 text-sm leading-relaxed">Supporting innovation while maintaining alignment.</p>
-                            </div>
-                          </div>
-                        </div>
-                     </div>
+                       <h3 className="text-3xl font-bold text-white mb-6 leading-tight">
+                         Structured. Compliant.<br />
+                         <span className="text-gray-400">Built for the Digital Future.</span>
+                       </h3>
+                       
+                       <div className="space-y-6 text-gray-400 text-lg leading-relaxed">
+                         <p>
+                           {/* Simplified English here */}
+                           <strong className="text-[#FE601F]">KryptX Solutions Private Limited</strong> is a fully registered Indian company dedicated to secure and compliance-oriented crypto services. We operate with a strict focus on <span className="text-white">transparency, internal controls, and risk management.</span>
+                         </p>
+                         <p>
+                           Our services include crypto buy and sell facilitation, professional consulting, tax assistance, and educational support, designed to ensure you can participate in the digital asset market safely and responsibly.
+                         </p>
+                       </div>
+                    </div>
+
+                    {/* RIGHT COLUMN: THE PILLARS (5 Cols) */}
+                    <div className="lg:col-span-5 bg-[#111]/40 p-8 md:p-12 flex flex-col justify-center gap-4">
+                       
+                       <h4 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                         <ShieldCheck size={20} className="text-[#FE601F]" />
+                         Operational Focus
+                       </h4>
+
+                       {/* Pillar 1 */}
+                       <div className="p-5 rounded-2xl bg-[#0f0f0f] border border-white/5 hover:border-[#FE601F]/30 transition-all duration-300 group/card">
+                         <div className="flex items-start gap-4">
+                           <div className="w-10 h-10 rounded-lg bg-[#FE601F]/10 flex items-center justify-center text-[#FE601F] flex-shrink-0">
+                             <Scale size={20} />
+                           </div>
+                           <div>
+                             <h5 className="text-white font-semibold text-base mb-1 group-hover/card:text-[#FE601F] transition-colors">Regulatory Alignment</h5>
+                             <p className="text-xs text-gray-500 leading-relaxed">Strict adherence to Indian government rules and KYC verification standards.</p>
+                           </div>
+                         </div>
+                       </div>
+
+                       {/* Pillar 2 */}
+                       <div className="p-5 rounded-2xl bg-[#0f0f0f] border border-white/5 hover:border-purple-500/30 transition-all duration-300 group/card">
+                         <div className="flex items-start gap-4">
+                           <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 flex-shrink-0">
+                             <TrendingUp size={20} />
+                           </div>
+                           <div>
+                             <h5 className="text-white font-semibold text-base mb-1 group-hover/card:text-purple-400 transition-colors">Prudent Growth</h5>
+                             <p className="text-xs text-gray-500 leading-relaxed">Focusing on long-term safety and building real investor confidence.</p>
+                           </div>
+                         </div>
+                       </div>
+
+                       {/* Service Tags (Updated 'Education' to 'Learn') */}
+                       <div className="pt-4 flex flex-wrap gap-2">
+                          {['Buy & Sell', 'Tax Assistance', 'Consulting', 'Learn'].map((tag, i) => (
+                            <span key={i} className="px-3 py-1 rounded-md bg-white/5 border border-white/10 text-[10px] uppercase font-bold text-gray-400 hover:text-white hover:border-white/30 transition-all cursor-default">
+                              {tag}
+                            </span>
+                          ))}
+                       </div>
+
+                    </div>
+
                   </div>
                 </div>
             </div>
 
             {/* =========================================
-                SECTION 2: THE ADVANTAGE
+                PART 2: THE ADVANTAGE
                ========================================= */}
             <div>
                 <div className="text-center mb-16">
@@ -171,7 +210,7 @@ const About = () => {
                     <div key={idx} className="group relative p-8 rounded-[32px] bg-[#0a0a0a] border border-white/5 hover:border-[#FE601F]/40 transition-all duration-500 overflow-hidden hover:-translate-y-2 flex flex-col">
                       <div className="absolute inset-0 bg-gradient-to-br from-[#FE601F]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       
-                      {/* ADVANTAGE NUMBER (Remains 120px because the card is wide) */}
+                      {/* ADVANTAGE NUMBER */}
                       <div className="absolute -right-4 -top-4 text-[120px] font-bold text-white/5 leading-none select-none group-hover:text-[#FE601F]/10 transition-colors duration-500 font-mono">
                         {card.id}
                       </div>
@@ -189,7 +228,7 @@ const About = () => {
             </div>
 
             {/* =========================================
-                SECTION 3: THE PROCESS
+                PART 3: THE PROCESS
                ========================================= */}
             <div id="process">
                 <div className="text-center mb-16">
@@ -237,7 +276,7 @@ const About = () => {
                         {/* TEXT CARD */}
                         <div className="bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 text-left md:text-center hover:border-[#FE601F]/30 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)] h-full relative overflow-hidden">
                           
-                          {/* FIX APPLIED: Reduced size to text-7xl so it fits the smaller box nicely */}
+                          {/* PROCESS NUMBER (Corrected Size) */}
                           <div className="absolute -right-2 -top-2 text-7xl font-bold text-white/5 leading-none select-none group-hover:text-[#FE601F]/10 transition-colors duration-500 font-mono">
                             {step.id}
                           </div>
