@@ -1,5 +1,10 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { 
+  ArrowRight, 
+  ShieldCheck, 
+  Zap,
+  Building2
+} from 'lucide-react';
 
 const Hero = () => {
   
@@ -51,9 +56,7 @@ const Hero = () => {
   };
 
   return (
-    // FIX 1: The 'overflow-hidden' is now on this outer FULL WIDTH wrapper.
-    // This allows the animation to expand beyond the 7xl container without getting cut.
-    <div className="relative w-full min-h-screen overflow-hidden ">
+    <div className="relative w-full min-h-screen overflow-hidden bg-[#050505]">
       
       {/* --- ANIMATIONS --- */}
       <style>{`
@@ -62,49 +65,93 @@ const Hero = () => {
         @keyframes pulse-gold { 0%, 100% { box-shadow: 0 0 30px rgba(247,147,26,0.1); } 50% { box-shadow: 0 0 60px rgba(247,147,26,0.3); } }
         
         @keyframes radiate-far {
-          0% {
-            transform: scale(0.5);
-            opacity: 0.8;
-          }
-          100% {
-            transform: scale(6.5);
-            opacity: 0;
-          }
+          0% { transform: scale(0.5); opacity: 0.8; }
+          100% { transform: scale(6.5); opacity: 0; }
         }
-
         .orbital-ring { will-change: transform; transform: translate3d(0, 0, 0); backface-visibility: hidden; perspective: 1000px; transform-style: preserve-3d; }
       `}</style>
 
-      {/* FIX 2: The inner container handles ALIGNMENT (max-w-7xl) but does NOT hide overflow. */}
       <section id="home" className="relative z-10 min-h-screen flex items-center pt-32 pb-16 px-6 max-w-7xl mx-auto">
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
           
-          {/* LEFT CONTENT */}
-          <div className="text-center lg:text-left z-20">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/10 to-purple-500/10 border border-orange-500/30 text-[#FE601F] text-xs font-bold uppercase tracking-wider mb-8 shadow-[0_0_20px_rgba(254,96,31,0.2)]">
-              <span className="w-2 h-2 rounded-full bg-[#FE601F] animate-pulse"></span>
-              Kerala's First Trusted Cryptocurrency Store
+          {/* =========================================
+              LEFT CONTENT (UPDATED)
+             ========================================= */}
+          <div className="text-center lg:text-left z-20 flex flex-col gap-10">
+            
+            {/* 1. Live Status Badge (WITH HOVER EFFECT) */}
+            <div className="flex justify-center lg:justify-start">
+               <div className="pl-2 pr-4 py-1.5 rounded-full bg-[#FE601F]/10 border border-[#FE601F]/20 backdrop-blur-md flex items-center gap-3 shadow-[0_0_20px_rgba(254,96,31,0.15)] transition-all duration-300 hover:bg-[#FE601F]/20 hover:border-[#FE601F]/50 hover:shadow-[0_0_30px_rgba(254,96,31,0.4)] hover:-translate-y-1 cursor-default">
+                 <div className="bg-[#FE601F] rounded-full p-1">
+                    <Zap size={12} className="text-white fill-white" />
+                 </div>
+                 <span className="text-[#FE601F] text-xs font-bold uppercase tracking-wider">
+                   Kerala's First Trusted Cryptocurrency Store
+                 </span>
+               </div>
             </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] tracking-tight mb-6 text-white">
-              Built on Trust.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FE601F] via-[#ff8c5a] to-[#ffa07a]">Powered by Compliance.</span>
-            </h1>
-            <p className="text-gray-400 text-lg leading-relaxed max-w-lg mx-auto lg:mx-0 mb-10">
-              Step out of the digital shadows. We provide safe P2P transactions, expert consulting, and full tax compliance—right here in Chalakudy.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <a href="#contact" className="px-8 py-4 bg-gradient-to-br from-[#FE601F] to-[#ff7a45] rounded-full text-white font-semibold shadow-[0_8px_32px_rgba(254,96,31,0.4)] hover:shadow-[0_12px_48px_rgba(254,96,31,0.6)] hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
-                Visit Our Office <ArrowRight size={18} />
+
+            {/* 2. Impact Typography (REVISED TEXT) */}
+            <div>
+                <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] tracking-tight text-white mb-6">
+                  Secure. Physical.<br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FE601F] via-[#FF8F50] to-[#FFB088] drop-shadow-[0_0_30px_rgba(254,96,31,0.3)]">
+                    Fully Compliant.
+                  </span>
+                </h1>
+                <p className="text-gray-400 text-lg md:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0 font-light">
+                  No more anonymous online risks. Visit our government-registered store for secure crypto trading, instant settlements, and expert tax advice—<span className="text-white font-medium">real people, real trust.</span>
+                </p>
+            </div>
+
+            {/* 3. Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
+              <a href="#contact" className="group px-8 py-4 bg-[#FE601F] text-white rounded-full font-bold shadow-[0_0_40px_rgba(254,96,31,0.4)] hover:shadow-[0_0_60px_rgba(254,96,31,0.6)] hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+                Visit Our Office
+                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </a>
-              <a href="#nodes" className="px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-full text-white font-semibold hover:bg-white/10 hover:border-white/20 transition-all flex items-center justify-center gap-2">
-                Explore Our Services
+              <a href="#about" className="px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 rounded-full text-white font-semibold backdrop-blur-md transition-all flex items-center justify-center gap-2">
+                About Us
               </a>
             </div>
+
+            {/* 4. TRUST BADGES (Unified Compact Pill) */}
+            <div className="pt-8 flex justify-center lg:justify-start">
+               <div className="inline-flex flex-col md:flex-row items-center gap-3 md:gap-6 px-6 py-2.5 rounded-2xl md:rounded-full bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors shadow-lg cursor-default">
+                  
+                  {/* Item 1 */}
+                  <div className="flex items-center gap-2">
+                     <ShieldCheck size={15} className="text-green-500" />
+                     <span className="text-xs font-semibold text-gray-300 tracking-wide">Govt. Registered</span>
+                  </div>
+
+                  {/* Divider (Hidden on Mobile) */}
+                  <div className="hidden md:block w-px h-3 bg-white/10"></div>
+
+                  {/* Item 2 */}
+                  <div className="flex items-center gap-2">
+                     <Building2 size={15} className="text-blue-500" />
+                     <span className="text-xs font-semibold text-gray-300 tracking-wide">Physical Store</span>
+                  </div>
+
+                  {/* Divider (Hidden on Mobile) */}
+                  <div className="hidden md:block w-px h-3 bg-white/10"></div>
+
+                  {/* Item 3 */}
+                  <div className="flex items-center gap-2">
+                     <Zap size={15} className="text-[#FE601F]" />
+                     <span className="text-xs font-semibold text-gray-300 tracking-wide">Instant Settlements</span>
+                  </div>
+
+               </div>
+            </div>
+
           </div>
 
-          {/* RIGHT VISUAL */}
-          {/* FIX 3: Removed 'hidden' on overflowing content here too, just in case */}
+          {/* =========================================
+              RIGHT VISUAL (ORBITAL ANIMATION)
+             ========================================= */}
           <div className="relative h-[700px] w-full flex items-center justify-center hidden lg:flex" style={{ perspective: '1000px' }}>
               
               {/* Background Atmosphere */}
@@ -117,50 +164,21 @@ const Hero = () => {
 
               {/* --- CENTER: FAR-REACHING SMOOTH WAVE --- */}
               <div className="relative z-50 flex items-center justify-center">
-                 
-                 {/* Wave 1 */}
-                 <div 
-                   className="absolute inset-0 rounded-full blur-md mix-blend-screen"
-                   style={{
-                     width: '130px',
-                     height: '130px',
-                     background: 'radial-gradient(circle, rgba(247,147,26,0) 20%, rgba(247,147,26,0.6) 50%, rgba(247,147,26,0) 70%)',
-                     animation: 'radiate-far 5s ease-out infinite',
-                   }}
-                 ></div>
-
-                 {/* Wave 2 */}
-                 <div 
-                   className="absolute inset-0 rounded-full blur-md mix-blend-screen"
-                   style={{
-                     width: '130px',
-                     height: '130px',
-                     background: 'radial-gradient(circle, rgba(247,147,26,0) 20%, rgba(247,147,26,0.5) 50%, rgba(247,147,26,0) 70%)',
-                     animation: 'radiate-far 5s ease-out infinite',
-                     animationDelay: '1.6s'
-                   }}
-                 ></div>
-
+                  
+                  {/* Wave 1 */}
+                  <div className="absolute inset-0 rounded-full blur-md mix-blend-screen" style={{ width: '130px', height: '130px', background: 'radial-gradient(circle, rgba(247,147,26,0) 20%, rgba(247,147,26,0.6) 50%, rgba(247,147,26,0) 70%)', animation: 'radiate-far 5s ease-out infinite' }}></div>
+                  {/* Wave 2 */}
+                  <div className="absolute inset-0 rounded-full blur-md mix-blend-screen" style={{ width: '130px', height: '130px', background: 'radial-gradient(circle, rgba(247,147,26,0) 20%, rgba(247,147,26,0.5) 50%, rgba(247,147,26,0) 70%)', animation: 'radiate-far 5s ease-out infinite', animationDelay: '1.6s' }}></div>
                   {/* Wave 3 */}
-                  <div 
-                   className="absolute inset-0 rounded-full blur-md mix-blend-screen"
-                   style={{
-                     width: '130px',
-                     height: '130px',
-                     background: 'radial-gradient(circle, rgba(247,147,26,0) 20%, rgba(247,147,26,0.4) 50%, rgba(247,147,26,0) 70%)',
-                     animation: 'radiate-far 5s ease-out infinite',
-                     animationDelay: '3.2s'
-                   }}
-                 ></div>
-                 
-                 {/* Solid Core */}
-                 <div className="relative w-32 h-32 rounded-full bg-[#0a0a0a] border-2 border-[#F7931A]/50 flex items-center justify-center shadow-[0_0_60px_rgba(247,147,26,0.3)] animate-[pulse-gold_4s_ease-in-out_infinite] z-20">
-                   <img src={logos.btc} alt="Bitcoin" className="w-16 h-16 object-contain drop-shadow-[0_0_15px_rgba(247,147,26,0.6)]" />
-                 </div>
-
+                  <div className="absolute inset-0 rounded-full blur-md mix-blend-screen" style={{ width: '130px', height: '130px', background: 'radial-gradient(circle, rgba(247,147,26,0) 20%, rgba(247,147,26,0.4) 50%, rgba(247,147,26,0) 70%)', animation: 'radiate-far 5s ease-out infinite', animationDelay: '3.2s' }}></div>
+                  
+                  {/* Solid Core */}
+                  <div className="relative w-32 h-32 rounded-full bg-[#0a0a0a] border-2 border-[#F7931A]/50 flex items-center justify-center shadow-[0_0_60px_rgba(247,147,26,0.3)] animate-[pulse-gold_4s_ease-in-out_infinite] z-20">
+                    <img src={logos.btc} alt="Bitcoin" className="w-16 h-16 object-contain drop-shadow-[0_0_15px_rgba(247,147,26,0.6)]" />
+                  </div>
               </div>
-
           </div>
+          
         </div>
       </section>
     </div>
