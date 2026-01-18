@@ -256,16 +256,12 @@ const Services = () => {
             </div>
           </div>
 
-          {/* ITEM 5: COMING SOON */}
-          <div className="p-5 rounded-2xl border border-dashed border-white/10 bg-white/5 flex items-center justify-between">
-             <div className="flex items-center gap-4">
-               <div className="p-2 rounded-lg bg-white/10 text-orange-500"><Sparkles size={20}/></div>
-               <div>
-                 <h4 className="text-white font-bold text-sm">More Coming Soon</h4>
-                 <p className="text-xs text-gray-500">DeFi & Enterprise APIs</p>
-               </div>
+          {/* ITEM 5: COMING SOON - SIMPLIFIED */}
+          <div className="p-5 rounded-2xl border border-dashed border-white/10 bg-white/5 flex items-center gap-4">
+             <div className="p-2 rounded-lg bg-white/10 text-orange-500 flex-shrink-0">
+               <Sparkles size={20}/>
              </div>
-             <span className="text-[10px] font-bold uppercase text-gray-500 bg-white/5 px-2 py-1 rounded">Dev</span>
+             <h4 className="text-white font-bold text-sm">More Coming Soon</h4>
           </div>
 
         </div>
