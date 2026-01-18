@@ -3,7 +3,7 @@ import { MapPin, Mail, Phone, Send, User, MessageSquare, ArrowRight, Instagram }
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-24 px-4 bg-black">
+    <section id="contact" className="py-24 px-4]">
       <div className="max-w-7xl mx-auto">
         
         <div className="bg-[#121212] border border-white/5 rounded-[32px] overflow-hidden shadow-2xl shadow-black/50 flex flex-col lg:flex-row">
