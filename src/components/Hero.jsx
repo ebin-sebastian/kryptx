@@ -56,7 +56,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden bg-[#050505]">
+    <div className="relative w-full min-h-screen overflow-hidden ">
       
       {/* --- ANIMATIONS --- */}
       <style>{`
@@ -76,11 +76,11 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
           
           {/* =========================================
-              LEFT CONTENT (UPDATED)
+              LEFT CONTENT
              ========================================= */}
           <div className="text-center lg:text-left z-20 flex flex-col gap-10">
             
-            {/* 1. Live Status Badge (WITH HOVER EFFECT) */}
+            {/* 1. Live Status Badge */}
             <div className="flex justify-center lg:justify-start">
                <div className="pl-2 pr-4 py-1.5 rounded-full bg-[#FE601F]/10 border border-[#FE601F]/20 backdrop-blur-md flex items-center gap-3 shadow-[0_0_20px_rgba(254,96,31,0.15)] transition-all duration-300 hover:bg-[#FE601F]/20 hover:border-[#FE601F]/50 hover:shadow-[0_0_30px_rgba(254,96,31,0.4)] hover:-translate-y-1 cursor-default">
                  <div className="bg-[#FE601F] rounded-full p-1">
@@ -92,7 +92,7 @@ const Hero = () => {
                </div>
             </div>
 
-            {/* 2. Impact Typography (REVISED TEXT) */}
+            {/* 2. Impact Typography */}
             <div>
                 <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] tracking-tight text-white mb-6">
                   Secure. Physical.<br />
@@ -111,18 +111,22 @@ const Hero = () => {
                 Visit Our Office
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </a>
-              <a href="#about" className="px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 rounded-full text-white font-semibold backdrop-blur-md transition-all flex items-center justify-center gap-2">
-                About Us
+              <a href="#contact" className="px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 rounded-full text-white font-semibold backdrop-blur-md transition-all flex items-center justify-center gap-2">
+                Contact Us
               </a>
             </div>
 
-            {/* 4. TRUST BADGES (Unified Compact Pill) */}
+            {/* 4. TRUST BADGES (Fixed Alignment) */}
             <div className="pt-8 flex justify-center lg:justify-start">
-               <div className="inline-flex flex-col md:flex-row items-center gap-3 md:gap-6 px-6 py-2.5 rounded-2xl md:rounded-full bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors shadow-lg cursor-default">
+               {/* CHANGED: 
+                 'items-center' -> 'items-start md:items-center'
+                 This aligns icons to the left on mobile, while keeping them centered vertically on desktop row.
+               */}
+               <div className="inline-flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-6 px-6 py-4 md:py-2.5 rounded-2xl md:rounded-full bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors shadow-lg cursor-default">
                   
                   {/* Item 1 */}
                   <div className="flex items-center gap-2">
-                     <ShieldCheck size={15} className="text-green-500" />
+                     <ShieldCheck size={15} className="text-green-500 flex-shrink-0" />
                      <span className="text-xs font-semibold text-gray-300 tracking-wide">Govt. Registered</span>
                   </div>
 
@@ -131,7 +135,7 @@ const Hero = () => {
 
                   {/* Item 2 */}
                   <div className="flex items-center gap-2">
-                     <Building2 size={15} className="text-blue-500" />
+                     <Building2 size={15} className="text-blue-500 flex-shrink-0" />
                      <span className="text-xs font-semibold text-gray-300 tracking-wide">Physical Store</span>
                   </div>
 
@@ -140,7 +144,7 @@ const Hero = () => {
 
                   {/* Item 3 */}
                   <div className="flex items-center gap-2">
-                     <Zap size={15} className="text-[#FE601F]" />
+                     <Zap size={15} className="text-[#FE601F] flex-shrink-0" />
                      <span className="text-xs font-semibold text-gray-300 tracking-wide">Instant Settlements</span>
                   </div>
 

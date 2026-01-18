@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   ShieldCheck, 
-  Target, 
-  Award, 
   UserCheck, 
   Building2, 
   Fingerprint, 
@@ -71,8 +69,22 @@ const steps = [
 ];
 
 const About = () => {
+  // State for Mobile Carousel Indicators
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollRef = useRef(null);
+
+  // Handle scroll to update active dot
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const scrollLeft = scrollRef.current.scrollLeft;
+      const cardWidth = scrollRef.current.children[0].offsetWidth;
+      const index = Math.round(scrollLeft / cardWidth);
+      setActiveIndex(index);
+    }
+  };
+
   return (
-    <section id="about" className="py-32 px-6 relative overflow-hidden ">
+    <section id="about" className="py-24 px-6 relative overflow-hidden ">
       
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -86,38 +98,43 @@ const About = () => {
         <div className="flex flex-col gap-32">
 
             {/* =========================================
-                PART 1: WHO WE ARE (SIMPLIFIED & CLEAR)
+                PART 1: WHO WE ARE
                ========================================= */}
             <div>
-                {/* Header Badge */}
+                {/* Header Section */}
                 <div className="text-center mb-16">
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#FE601F] text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-md shadow-[0_0_15px_rgba(254,96,31,0.2)]">
                     <Building2 size={14} />
-                    Corporate Profile
+                    Who We Are
                   </div>
-                  <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">
+                  <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">
                     About <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FE601F] via-[#ff8c5a] to-[#ffa07a]">KryptX Solutions</span>
                   </h2>
                 </div>
 
                 {/* --- CORPORATE DASHBOARD CARD --- */}
-                <div className="relative rounded-[40px] border border-white/10 bg-[#0a0a0a] overflow-hidden group shadow-2xl">
+                <div className="relative rounded-[40px] bg-[#0a0a0a] group shadow-2xl transition-all duration-500 hover:-translate-y-1">
                   
-                  {/* Top Glowing Edge */}
-                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#FE601F]/50 to-transparent"></div>
+                  {/* Smooth Border Overlay */}
+                  <div className="absolute inset-0 rounded-[40px] border border-white/10 pointer-events-none z-20 transition-colors duration-500 group-hover:border-[#FE601F]/50"></div>
                   
+                  {/* Soft Inner Glow */}
+                  <div className="absolute inset-0 rounded-[40px] bg-[#FE601F]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"></div>
+
                   <div className="grid grid-cols-1 lg:grid-cols-12 relative z-10">
                     
                     {/* LEFT COLUMN: THE STORY (7 Cols) */}
                     <div className="lg:col-span-7 p-8 md:p-12 lg:border-r border-white/5 flex flex-col justify-center">
                        
-                       {/* Identity Tag (SIMPLIFIED) */}
+                       {/* Identity Tag */}
                        <div className="flex flex-wrap gap-3 mb-8">
-                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
+                         {/* Green Tag */}
+                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 hover:border-green-500/50 hover:shadow-[0_0_15px_rgba(34,197,94,0.3)] transition-all duration-300 cursor-default">
                              <CheckCircle2 size={14} className="text-green-500" />
                              <span className="text-xs font-bold text-green-500 tracking-wide uppercase">Govt. Registered Entity</span>
                          </div>
-                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20">
+                         {/* Blue Tag */}
+                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all duration-300 cursor-default">
                              <FileText size={14} className="text-blue-500" />
                              <span className="text-xs font-bold text-blue-500 tracking-wide uppercase">Licensed & Compliant</span>
                          </div>
@@ -130,8 +147,7 @@ const About = () => {
                        
                        <div className="space-y-6 text-gray-400 text-lg leading-relaxed">
                          <p>
-                           {/* Simplified English here */}
-                           <strong className="text-[#FE601F]">KryptX Solutions Private Limited</strong> is a fully registered Indian company dedicated to secure and compliance-oriented crypto services. We operate with a strict focus on <span className="text-white">transparency, internal controls, and risk management.</span>
+                           <strong className="text-[#FE601F] group-hover:text-[#ff8c5a] transition-colors duration-300">KryptX Solutions Private Limited</strong> is dedicated to secure and compliance-oriented crypto services. We operate with a strict focus on <span className="text-white">transparency, internal controls, and risk management.</span>
                          </p>
                          <p>
                            Our services include crypto buy and sell facilitation, professional consulting, tax assistance, and educational support, designed to ensure you can participate in the digital asset market safely and responsibly.
@@ -148,35 +164,35 @@ const About = () => {
                        </h4>
 
                        {/* Pillar 1 */}
-                       <div className="p-5 rounded-2xl bg-[#0f0f0f] border border-white/5 hover:border-[#FE601F]/30 transition-all duration-300 group/card">
+                       <div className="p-5 rounded-2xl bg-[#0f0f0f] border border-white/5 hover:border-[#FE601F]/40 hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(0,0,0,0.4)] transition-all duration-300 group/card">
                          <div className="flex items-start gap-4">
-                           <div className="w-10 h-10 rounded-lg bg-[#FE601F]/10 flex items-center justify-center text-[#FE601F] flex-shrink-0">
+                           <div className="w-10 h-10 rounded-lg bg-[#FE601F]/10 flex items-center justify-center text-[#FE601F] flex-shrink-0 group-hover/card:bg-[#FE601F]/20 transition-all">
                              <Scale size={20} />
                            </div>
                            <div>
                              <h5 className="text-white font-semibold text-base mb-1 group-hover/card:text-[#FE601F] transition-colors">Regulatory Alignment</h5>
-                             <p className="text-xs text-gray-500 leading-relaxed">Strict adherence to Indian government rules and KYC verification standards.</p>
+                             <p className="text-xs text-gray-500 leading-relaxed group-hover/card:text-gray-400 transition-colors">Strict adherence to Indian government rules and KYC verification standards.</p>
                            </div>
                          </div>
                        </div>
 
                        {/* Pillar 2 */}
-                       <div className="p-5 rounded-2xl bg-[#0f0f0f] border border-white/5 hover:border-purple-500/30 transition-all duration-300 group/card">
+                       <div className="p-5 rounded-2xl bg-[#0f0f0f] border border-white/5 hover:border-purple-500/40 hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(0,0,0,0.4)] transition-all duration-300 group/card">
                          <div className="flex items-start gap-4">
-                           <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 flex-shrink-0">
+                           <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 flex-shrink-0 group-hover/card:bg-purple-500/20 transition-all">
                              <TrendingUp size={20} />
                            </div>
                            <div>
                              <h5 className="text-white font-semibold text-base mb-1 group-hover/card:text-purple-400 transition-colors">Prudent Growth</h5>
-                             <p className="text-xs text-gray-500 leading-relaxed">Focusing on long-term safety and building real investor confidence.</p>
+                             <p className="text-xs text-gray-500 leading-relaxed group-hover/card:text-gray-400 transition-colors">Focusing on long-term safety and building real investor confidence.</p>
                            </div>
                          </div>
                        </div>
 
-                       {/* Service Tags (Updated 'Education' to 'Learn') */}
+                       {/* Service Tags */}
                        <div className="pt-4 flex flex-wrap gap-2">
                           {['Buy & Sell', 'Tax Assistance', 'Consulting', 'Learn'].map((tag, i) => (
-                            <span key={i} className="px-3 py-1 rounded-md bg-white/5 border border-white/10 text-[10px] uppercase font-bold text-gray-400 hover:text-white hover:border-white/30 transition-all cursor-default">
+                            <span key={i} className="px-3 py-1 rounded-md bg-white/5 border border-white/10 text-[10px] uppercase font-bold text-gray-400 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all cursor-default">
                               {tag}
                             </span>
                           ))}
@@ -205,30 +221,56 @@ const About = () => {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {advantageCards.map((card, idx) => (
-                    <div key={idx} className="group relative p-8 rounded-[32px] bg-[#0a0a0a] border border-white/5 hover:border-[#FE601F]/40 transition-all duration-500 overflow-hidden hover:-translate-y-2 flex flex-col">
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#FE601F]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      
-                      {/* ADVANTAGE NUMBER */}
-                      <div className="absolute -right-4 -top-4 text-[120px] font-bold text-white/5 leading-none select-none group-hover:text-[#FE601F]/10 transition-colors duration-500 font-mono">
-                        {card.id}
-                      </div>
-                      
-                      <div className="relative z-10 flex flex-col h-full">
-                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:border-[#FE601F]/30 transition-all duration-500 shadow-lg">
-                          <card.icon size={32} className="text-[#FE601F] drop-shadow-[0_0_10px_rgba(254,96,31,0.3)]" />
+                <div className="relative">
+                  <div 
+                    ref={scrollRef}
+                    onScroll={handleScroll}
+                    className="
+                      flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-6 
+                      pb-12 pt-10 -mx-6 px-6 
+                      md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:mx-0 md:px-0 md:py-0
+                      [&::-webkit-scrollbar]:hidden
+                    "
+                  >
+                    {advantageCards.map((card, idx) => (
+                      <div 
+                        key={idx} 
+                        className="
+                          group relative p-8 rounded-[32px] bg-[#0a0a0a] border border-white/5 hover:border-[#FE601F]/40 transition-all duration-500 overflow-hidden hover:-translate-y-2 flex flex-col
+                          min-w-[85%] sm:min-w-[400px] md:min-w-0 snap-center shadow-lg
+                        "
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#FE601F]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="absolute -right-4 -top-4 text-[120px] font-bold text-white/5 leading-none select-none group-hover:text-[#FE601F]/10 transition-colors duration-500 font-mono">
+                          {card.id}
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#FE601F] transition-colors duration-300">{card.title}</h3>
-                        <p className="text-gray-400 leading-relaxed text-base border-t border-white/5 pt-6 mt-auto group-hover:border-white/10 transition-colors">{card.desc}</p>
+                        <div className="relative z-10 flex flex-col h-full">
+                          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:border-[#FE601F]/30 transition-all duration-500 shadow-lg">
+                            <card.icon size={32} className="text-[#FE601F] drop-shadow-[0_0_10px_rgba(254,96,31,0.3)]" />
+                          </div>
+                          <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#FE601F] transition-colors duration-300">{card.title}</h3>
+                          <p className="text-gray-400 leading-relaxed text-base border-t border-white/5 pt-6 mt-auto group-hover:border-white/10 transition-colors">{card.desc}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+
+                  <div className="flex md:hidden justify-center items-center gap-2 -mt-4 mb-4">
+                    {advantageCards.map((_, idx) => (
+                      <div 
+                        key={idx}
+                        className={`
+                          h-1.5 rounded-full transition-all duration-300
+                          ${activeIndex === idx ? 'w-8 bg-[#FE601F]' : 'w-2 bg-white/20'}
+                        `}
+                      />
+                    ))}
+                  </div>
                 </div>
             </div>
 
             {/* =========================================
-                PART 3: THE PROCESS
+                PART 3: THE PROCESS (UPDATED FOR MOBILE ALIGNMENT)
                ========================================= */}
             <div id="process">
                 <div className="text-center mb-16">
@@ -252,8 +294,10 @@ const About = () => {
                     <div className="absolute top-0 bottom-0 left-0 w-full bg-gradient-to-r from-[#FE601F] to-[#4c1d95]/50 rounded-full"></div>
                   </div>
 
-                  {/* MAIN TRACK LINE (Mobile) */}
-                  <div className="md:hidden absolute left-[28px] top-0 bottom-0 w-1 bg-[#1a1a1a] rounded-full">
+                  {/* MAIN TRACK LINE (Mobile - FIXED) 
+                      - Added `-translate-x-1/2` to perfectly center the line on `left-[28px]`
+                  */}
+                  <div className="md:hidden absolute left-[28px] -translate-x-1/2 top-0 bottom-0 w-1 bg-[#1a1a1a] rounded-full">
                      <div className="absolute top-0 left-0 right-0 h-full bg-gradient-to-b from-[#FE601F] to-[#4c1d95]/50 rounded-full"></div>
                   </div>
 
@@ -262,21 +306,25 @@ const About = () => {
                     {steps.map((step, idx) => (
                       <div key={idx} className="group relative pl-20 md:pl-0 pt-0 md:pt-16">
                         
-                        {/* ICON CHECKPOINT */}
-                        <div className="absolute left-[28px] top-0 md:left-1/2 md:top-[28px] -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-[#050505] border-4 border-[#FE601F] flex items-center justify-center z-20 shadow-[0_0_20px_rgba(254,96,31,0.4)] transition-transform duration-300 group-hover:scale-110">
+                        {/* ICON CHECKPOINT (FIXED) 
+                            - Mobile: Changed `top-0` to `top-10` to align icon with card content better.
+                            - Kept desktop positioning intact.
+                        */}
+                        <div className="absolute left-[28px] top-10 md:left-1/2 md:top-[28px] -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-[#050505] border-4 border-[#FE601F] flex items-center justify-center z-20 shadow-[0_0_20px_rgba(254,96,31,0.4)] transition-transform duration-300 group-hover:scale-110">
                           <div className="w-full h-full rounded-full bg-[#111] flex items-center justify-center">
                             <step.icon size={20} className="text-white group-hover:text-[#FE601F] transition-colors duration-300" />
                           </div>
                           
-                          {/* Vertical Connector */}
+                          {/* Vertical Connector (Desktop) */}
                           <div className="md:block hidden absolute top-full left-1/2 w-0.5 h-8 bg-gradient-to-b from-[#FE601F] to-white/10 -translate-x-1/2"></div>
+                          {/* Horizontal Connector (Mobile) */}
                           <div className="md:hidden block absolute left-full top-1/2 h-0.5 w-8 bg-gradient-to-r from-[#FE601F] to-white/10 -translate-y-1/2"></div>
                         </div>
 
                         {/* TEXT CARD */}
                         <div className="bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 text-left md:text-center hover:border-[#FE601F]/30 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)] h-full relative overflow-hidden">
                           
-                          {/* PROCESS NUMBER (Corrected Size) */}
+                          {/* PROCESS NUMBER */}
                           <div className="absolute -right-2 -top-2 text-7xl font-bold text-white/5 leading-none select-none group-hover:text-[#FE601F]/10 transition-colors duration-500 font-mono">
                             {step.id}
                           </div>

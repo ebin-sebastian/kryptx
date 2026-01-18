@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, ArrowRight } from 'lucide-react';
+import { ShieldCheck, ArrowRight, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // UPDATED: Added "Contact" to the list
   const navItems = [
     { id: 'home', label: 'Home' },
-    { id: 'nodes', label: 'Our Services' },
+    { id: 'services', label: 'Our Services' },
     { id: 'about', label: 'About Us' },
-    { id: 'contact', label: 'Contact Us' }, // New Item
+    { id: 'contact', label: 'Contact Us' },
   ];
 
   useEffect(() => {
@@ -43,6 +43,8 @@ const Navbar = () => {
 
   const handleNavClick = (e, id) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false); // Close mobile menu on click
+    
     const element = document.getElementById(id);
     if (element) {
       const navHeight = 80;
@@ -59,8 +61,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-500 ease-in-out ${scrolled ? 'py-3' : 'py-6'}`}>
-      <div className={`w-full max-w-6xl px-6 py-3 flex justify-between items-center transition-all duration-500 rounded-full ${scrolled ? 'bg-[#0f0f0f]/80 backdrop-blur-xl border border-white/10 shadow-2xl' : 'bg-transparent border border-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 flex flex-col items-center transition-all duration-500 ease-in-out ${scrolled ? 'py-3' : 'py-6'}`}>
+      
+      {/* --- MAIN NAVBAR CONTAINER --- */}
+      <div className={`w-[90%] md:w-full max-w-6xl px-6 py-3 flex justify-between items-center transition-all duration-500 rounded-full relative z-50 ${scrolled || isMobileMenuOpen ? 'bg-[#0f0f0f]/80 backdrop-blur-xl border border-white/10 shadow-2xl' : 'bg-transparent border border-transparent'}`}>
         
         {/* Logo */}
         <div 
@@ -73,7 +77,7 @@ const Navbar = () => {
           <span className="text-xl font-bold tracking-tight text-white group-hover:text-orange-500 transition-colors">KryptX</span>
         </div>
 
-        {/* Navigation Links (Desktop) */}
+        {/* DESKTOP: Navigation Links */}
         <div className="hidden md:flex items-center gap-1 bg-white/5 border border-white/5 rounded-full p-1.5 backdrop-blur-sm relative">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
@@ -97,7 +101,7 @@ const Navbar = () => {
           })}
         </div>
 
-        {/* CTA Button */}
+        {/* DESKTOP: CTA Button */}
         <a 
           href="#contact" 
           onClick={(e) => handleNavClick(e, 'contact')}
@@ -105,7 +109,56 @@ const Navbar = () => {
         >
           Visit Store <ArrowRight size={16} />
         </a>
+
+        {/* MOBILE: Hamburger Button */}
+        <button 
+          className="md:hidden p-2 text-white hover:bg-white/10 rounded-full transition-colors"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {/* --- MOBILE MENU DROPDOWN (Transparent Glassmorphism) --- */}
+      <div className={`
+        absolute top-full left-0 right-0 px-6 mt-2 transition-all duration-300 ease-in-out transform origin-top md:hidden
+        ${isMobileMenuOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'}
+      `}>
+        <div className="bg-[#0f0f0f]/80 border border-white/10 rounded-[24px] p-4 shadow-2xl backdrop-blur-xl overflow-hidden">
+          <div className="flex flex-col gap-2">
+            {navItems.map((item) => {
+               const isActive = activeSection === item.id;
+               return (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={(e) => handleNavClick(e, item.id)}
+                  className={`
+                    px-6 py-4 rounded-xl text-base font-medium transition-all duration-200
+                    ${isActive 
+                      ? 'bg-[#FE601F]/10 text-[#FE601F] border border-[#FE601F]/20' 
+                      : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                    }
+                  `}
+                >
+                  {item.label}
+                </a>
+               );
+            })}
+            
+            <div className="h-px bg-white/10 my-2"></div>
+            
+            <a 
+              href="#contact" 
+              onClick={(e) => handleNavClick(e, 'contact')}
+              className="flex items-center justify-center gap-2 bg-[#FE601F] text-white px-6 py-4 rounded-xl text-base font-bold active:scale-95 transition-transform"
+            >
+              Visit Store <ArrowRight size={18} />
+            </a>
+          </div>
+        </div>
+      </div>
+
     </nav>
   );
 };
