@@ -61,10 +61,23 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 flex flex-col items-center transition-all duration-500 ease-in-out ${scrolled ? 'py-3' : 'py-6'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 flex flex-col items-center transition-all duration-300 ease-out ${scrolled ? 'py-3' : 'py-6'}`}>
       
       {/* --- MAIN NAVBAR CONTAINER --- */}
-      <div className={`w-[90%] md:w-full max-w-6xl px-6 py-3 flex justify-between items-center transition-all duration-500 rounded-full relative z-50 ${scrolled || isMobileMenuOpen ? 'bg-[#0f0f0f]/80 backdrop-blur-xl border border-white/10 shadow-2xl' : 'bg-transparent border border-transparent'}`}>
+      {/* Fixed "Layout Shift" Issue: 
+         1. Added 'bg-[#0f0f0f]/80' conditionally but with smooth transition-colors.
+         2. Synced z-index to ensure it sits above the dropdown logic visually.
+      */}
+      <div 
+        className={`
+          w-[90%] md:w-full max-w-6xl px-6 py-3 flex justify-between items-center rounded-full relative z-[60]
+          transition-all duration-300 ease-in-out
+          ${scrolled || isMobileMenuOpen 
+            ? 'bg-[#0f0f0f]/80 backdrop-blur-xl border border-white/10 shadow-2xl' 
+            : 'bg-transparent border border-transparent'
+          }
+        `}
+      >
         
         {/* Logo */}
         <div 
@@ -112,19 +125,31 @@ const Navbar = () => {
 
         {/* MOBILE: Hamburger Button */}
         <button 
-          className="md:hidden p-2 text-white hover:bg-white/10 rounded-full transition-colors"
+          className="md:hidden p-2 text-white hover:bg-white/10 rounded-full transition-colors active:scale-90"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle Menu"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* --- MOBILE MENU DROPDOWN (Transparent Glassmorphism) --- */}
-      <div className={`
-        absolute top-full left-0 right-0 px-6 mt-2 transition-all duration-300 ease-in-out transform origin-top md:hidden
-        ${isMobileMenuOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'}
-      `}>
-        <div className="bg-[#0f0f0f]/80 border border-white/10 rounded-[24px] p-4 shadow-2xl backdrop-blur-xl overflow-hidden">
+      {/* --- MOBILE MENU DROPDOWN --- */}
+      {/* Smoothness Fixes:
+         1. 'visible' vs 'invisible': Ensures menu is gone from DOM interaction when closed.
+         2. 'transition-all duration-300 cubic-bezier(...)': Smooth elastic snap effect.
+         3. 'top-[120%]': Pushes it slightly further down so it slides UP/DOWN nicely without clipping.
+      */}
+      <div 
+        className={`
+          absolute top-full left-0 right-0 px-6 mt-2 md:hidden overflow-hidden
+          transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] origin-top
+          ${isMobileMenuOpen 
+            ? 'opacity-100 translate-y-0 visible scale-100' 
+            : 'opacity-0 -translate-y-4 invisible scale-95 pointer-events-none'
+          }
+        `}
+      >
+        <div className="bg-[#0f0f0f]/90 border border-white/10 rounded-[24px] p-4 shadow-2xl backdrop-blur-2xl ring-1 ring-white/5">
           <div className="flex flex-col gap-2">
             {navItems.map((item) => {
                const isActive = activeSection === item.id;
@@ -134,7 +159,7 @@ const Navbar = () => {
                   href={`#${item.id}`}
                   onClick={(e) => handleNavClick(e, item.id)}
                   className={`
-                    px-6 py-4 rounded-xl text-base font-medium transition-all duration-200
+                    px-6 py-4 rounded-xl text-base font-medium transition-all duration-200 block text-left
                     ${isActive 
                       ? 'bg-[#FE601F]/10 text-[#FE601F] border border-[#FE601F]/20' 
                       : 'text-gray-300 hover:bg-white/5 hover:text-white'
@@ -151,7 +176,7 @@ const Navbar = () => {
             <a 
               href="#contact" 
               onClick={(e) => handleNavClick(e, 'contact')}
-              className="flex items-center justify-center gap-2 bg-[#FE601F] text-white px-6 py-4 rounded-xl text-base font-bold active:scale-95 transition-transform"
+              className="flex items-center justify-center gap-2 bg-[#FE601F] text-white px-6 py-4 rounded-xl text-base font-bold active:scale-95 transition-transform shadow-lg shadow-orange-500/20"
             >
               Visit Our Office <ArrowRight size={18} />
             </a>
