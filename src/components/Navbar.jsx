@@ -153,7 +153,7 @@ const Navbar = () => {
               onClick={(e) => handleNavClick(e, 'contact')}
               className="flex items-center justify-center gap-2 bg-[#FE601F] text-white px-6 py-4 rounded-xl text-base font-bold active:scale-95 transition-transform"
             >
-              Visit Store <ArrowRight size={18} />
+              Visit Our Office <ArrowRight size={18} />
             </a>
           </div>
         </div>
