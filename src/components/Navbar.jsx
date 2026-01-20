@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ShieldCheck, ArrowRight, Menu, X } from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
+import logo from '../assets/logo.png'; // Import the logo
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -47,7 +48,7 @@ const Navbar = () => {
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside); // Important for mobile touch
+    document.addEventListener('touchstart', handleClickOutside);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -75,7 +76,7 @@ const Navbar = () => {
 
   return (
     <nav 
-      ref={navRef} // Attach Ref Here
+      ref={navRef}
       className={`fixed top-0 left-0 right-0 z-50 flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${scrolled ? 'py-3' : 'py-6'}`}
     >
       
@@ -93,15 +94,18 @@ const Navbar = () => {
         {/* Content Layer */}
         <div className="relative px-6 py-3 flex justify-between items-center rounded-full">
           
-          {/* Logo */}
+          {/* Logo Section */}
           <div 
             className="flex items-center gap-3 cursor-pointer group select-none"
             onClick={(e) => handleNavClick(e, 'home')}
           >
-            <div className="w-9 h-9 bg-[#FE601F] rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:scale-110 transition-transform duration-300">
-              <ShieldCheck size={20} className="text-white" />
-            </div>
-            <span className="text-xl font-bold tracking-tight text-white group-hover:text-orange-500 transition-colors">KryptX</span>
+            {/* INCREASED SIZE: Changed h-9 to h-12 */}
+            <img 
+              src={logo} 
+              alt="KryptX Logo" 
+              className="h-8 w-auto object-contain group-hover:scale-110 transition-transform duration-300"
+            />
+          
           </div>
 
           {/* Desktop Links */}
